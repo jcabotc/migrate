@@ -7,16 +7,11 @@ module Migrate
       @old, @new = old_project, new_project
     end
 
-    def define_model project, model_name, options = {}
-      class_name = ( options[:as]    || model_name ).to_s.classify
-      table      = ( options[:table] || model_name ).to_s.tableize
+    def undefine_model class_name, options = {}
+      class_name = class_name.to_s.classify
 
-      Object.const_set class_name, Class.new( ActiveRecord::Base )
-
-      class_name.constantize.instance_eval do
-        establish_connection project.database_configuration
-        table_name = table
-      end
+      Object.send :remove_const, class_name
     end
+
   end
 end

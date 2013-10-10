@@ -1,12 +1,9 @@
-require 'pp'
-require 'ripl'
+require 'ripl/multi_line'
 
 require 'console/api'
 
 module Migrate
   class Console
-
-    PROMPT_SYMBOL = '> '
 
     def initialize old_project, new_project
       @old_project, @new_project = old_project, new_project
