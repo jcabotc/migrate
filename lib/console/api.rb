@@ -1,3 +1,5 @@
+require 'yaml'
+
 require 'script/script_manager'
 
 module Migrate
@@ -24,6 +26,10 @@ module Migrate
 
     def scripts
       ScriptManager.script_names
+    end
+
+    def help
+      puts File.readlines File.expand_path( File.join( 'lib', 'console', 'USAGE' ) )
     end
 
   end

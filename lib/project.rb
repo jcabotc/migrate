@@ -22,8 +22,8 @@ module Migrate
     end
 
     def model model_name, options = {}
-      class_name = ( options[:as]    || model_name ).to_s.classify
-      table      = ( options[:table] || model_name ).to_s.tableize
+      class_name = options[:as]    || model_name.to_s.classify
+      table      = options[:table] || model_name.to_s.tableize
 
       klass = build_class class_name, table
 

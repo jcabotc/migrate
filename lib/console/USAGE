@@ -1,0 +1,61 @@
+=========================== Migrate console usage ===========================
+
+ You have access to your old and new projects through #old and #new methods
+
+ Project (#old and #new) useful methods:
+
+    Project#model:
+
+        model( model_name, options )  # => ActiveRecord::Base
+
+      It returns a constant which inherits from ActiveRecord::Base, and
+      also define it in the Object class to make it available from
+      everywhere.
+
+      The class name is model_name.to_s.classify by default, but custom
+      class names can be used through the :as option.
+      The table name is model_name.to_s.tableize by default, but custom
+      table names can be used through the :table option.
+
+      Examples:
+
+        * new.model :user
+
+          Returns and defines an activerecord class: User, which uses the
+          table users from de new project database.
+
+        * old.model :user, :as => 'OldUser'
+
+          Returns and defines an activerecord class: OldUser, which uses the
+          table users from de old project database.
+
+    Project#database_configuration
+
+        database_configuration()  # => Hash
+
+      It returns a hash with the information used to establish the database
+      connection.
+
+  You may want to undefine models after its use to not pollute the root
+  namespace. You can do so with #undefine_model.
+
+    undefine_model 'User'
+
+  undefines the previously defined User class.
+
+  You also have access to the following methods to interact with scripts:
+
+    #scripts:
+
+        scripts()   # => Array
+
+      It returns a list of all available scripts in the scripts/ directory.
+
+    #script:
+
+        script( *script_names )  # => nil
+
+      It executes the given scripts. By default (with no arguments) all
+      script will be run.
+
+=============================================================================
