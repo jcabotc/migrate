@@ -50,14 +50,14 @@ module Migrate
           build_script "#{script_name.classify}Script"
         end
       else
-        Script::Base.descendants.map { |script_class| script_class.new @old, @new }
+        Script::Base.scripts.map { |script_class| script_class.new @old, @new }
       end
     end
 
     def build_script class_name
       begin
         class_name.constantize.new @old, @new
-      rescue
+      rescue NameError
         raise ScriptNotFound, "#{class_name} not found"
       end
     end
