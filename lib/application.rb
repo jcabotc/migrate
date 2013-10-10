@@ -7,6 +7,7 @@ require 'script/script_manager'
 
 module Migrate
   class Application < Thor
+    include Thor::Actions
 
     def self.environment_options
       method_option :environment,     :aliases => '-e',  :type => :string, :default  => 'development',
@@ -41,7 +42,21 @@ module Migrate
     end
 
 
+    desc 'generate', 'Generates a blank script file with the given name'
+
+    def generate script_name
+      @script_class_name = script_name.classify
+
+      template 'script_template.rb', "scripts/#{script_name.underscore}_script.rb"
+    end
+
   private
+
+    attr_reader :script_class_name
+
+    def source_paths
+      [ 'lib/generate' ]
+    end
 
     def projects
       @_projects ||= [ 
