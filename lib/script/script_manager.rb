@@ -16,7 +16,7 @@ module Migrate
     def initialize old_project, new_project, scripts
       @old, @new = old_project, new_project
 
-      @scripts = script_classes_from scripts
+      @scripts = script_objects_from scripts
     end
 
     def run
@@ -24,6 +24,12 @@ module Migrate
         log :running, script
         script.run
         log :done, script
+      end
+    end
+
+    def self.script_names
+      Script::Base.scripts.map do |script|
+        script.name[0..-7].underscore
       end
     end
 
@@ -44,7 +50,7 @@ module Migrate
       end
     end
 
-    def script_classes_from scripts
+    def script_objects_from scripts
       if scripts.any?
         scripts.map do |script_name|
           build_script "#{script_name.classify}Script"
