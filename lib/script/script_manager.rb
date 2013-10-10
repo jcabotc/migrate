@@ -9,6 +9,8 @@ module Migrate
 
     ScriptNotFound = Class.new StandardError
 
+    LINE_LENGTH = 60
+
     attr_reader :old, :new
 
     def initialize old_project, new_project, scripts
@@ -28,9 +30,17 @@ module Migrate
   private
 
     def log action, script
-      puts case action
-        when :running then "====== Running #{script.class.name} ======"
-        when :done    then "===== #{script.class.name} succeeded ====="
+      line = '=' * LINE_LENGTH
+
+      case action
+        when :running
+          running_text = "Running #{script.class.name}"
+          margin = '=' * ( ( ( LINE_LENGTH - running_text.size ) / 2 ) - 1 )
+
+          puts "#{margin} #{running_text} #{margin}"
+        when :done
+          puts line
+          puts ''
       end
     end
 

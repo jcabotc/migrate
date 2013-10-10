@@ -3,7 +3,7 @@ require 'script/base'
 class TestScript < Migrate::Script::Base
 
   def run
-    puts 'RUNNING!!!!!'
+    log 'RUNNING!!!!!'
   end
 
 end
