@@ -20,7 +20,7 @@ module Migrate
     end
 
 
-    desc 'console', 'Runs a ruby console with old an new projects available'
+    desc 'console OLD_PROJECT NEW_PROJECT ', 'Runs a ruby console with old an new projects available'
     environment_options
 
     def console old_path, new_path
@@ -31,7 +31,7 @@ module Migrate
     end
 
 
-    desc 'script', 'Runs the given scripts (all by default)'
+    desc 'script OLD_PROJECT NEW_PROJECT [SCRIPT_NAME, ...]', 'Runs the given scripts (all by default)'
     environment_options
 
     def script old_path, new_path, *scripts
@@ -42,13 +42,14 @@ module Migrate
     end
 
 
-    desc 'generate', 'Generates a blank script file with the given name'
+    desc 'generate SCRIPT_NAME', 'Generates a blank script file with the given name'
 
     def generate script_name
       @script_class_name = script_name.classify
 
       template 'script_template.rb', "scripts/#{script_name.underscore}_script.rb"
     end
+
 
   private
 

@@ -11,8 +11,16 @@ module Migrate
 
     def run
       api = Api.new @old_project, @new_project
+      empty_argv
 
       Ripl.start :binding => api.instance_eval{ binding }
+    end
+
+  private
+
+    def empty_argv
+      Object.send :remove_const, :ARGV
+      Object.send :const_set, :ARGV, []
     end
 
   end
